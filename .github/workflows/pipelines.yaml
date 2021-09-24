@@ -29,6 +29,19 @@ jobs:
           java-version: 1.8
           server-id: github
           settings-path: ${{ github.workspace }}
+          
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+         languages: Java
+         config-file: ./.github/codeql/codeql-config.yml
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
